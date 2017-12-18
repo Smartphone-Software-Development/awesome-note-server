@@ -10,18 +10,21 @@ const Services = require('./services/noteOperation') ;
 mongoose.Promise = global.Promise;
 app.set('port', process.env.PORT || 2333);
 mongoose.connect(DB_URL, {useMongoClient:true});
+mongoose.connection.on('connected', () => {
+    console.log('连接到mongoDB端口：' + DB_URL);
+});
+mongoose.connection.on('error',function (err) {    
+    console.log('mongoDB连接错误：' + err);  
+});
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.post('/mine/uploadNote', function(req, res){
-    //console.log(req.body);
     let note = req.body.note;
     let user_id = req.body.user_id;
     let pwd = req.body.pwd;
-    console.log(note);
     Services.upload(user_id, pwd, note).then(function(result) {
-    //Services.NoteOperation.upload(user_id, pwd, note).then(function(result) {
         if(result == -1) {
             res.type('text/plain');
             res.send('数据库账号密码错误，请重新登入');
@@ -39,8 +42,7 @@ app.post('/mine/updateNote', function(req, res) {
     let note = req.body.note;
     let user_id = req.body.user_id;
     let pwd = req.body.pwd;
-    Services.update(user_id, pwd, note).then(function(result) {
-    //Services.NoteOperation.update(user_id, pwd, note).then(function(result) {
+    Services.update(user_id, pwd, note).then(function(result) {{
         if(result == -1) {
             res.type('text/plain');
             res.send('数据库账号密码错误，请重新登入');
@@ -59,7 +61,6 @@ app.post('/mine/getAllNote', function(req, res) {
     let pwd = req.body.pwd;
     let limitation = req.body.limitation;
     Services.getAll(user_id, pwd, limitation).then(function(result) {
-    //Services.NoteOperation.getAll(user_id, pwd, limitation).then(function(result) {
         if(result == -1) {
             res.type('text/plain');
             res.send('数据库账号密码错误，请重新登入');
@@ -74,7 +75,6 @@ app.post('/mine/getNote', function(req, res) {
     let pwd = req.body.pwd;
     let note_id = req.body.note_id;
     Services.get(user_id, pwd, note_id).then(function(result) {
-    //Services.NoteOperation.getAll(user_Id, pwd, limitation).then(function(result) {
         if(result == -1) {
             res.type('text/plain');
             res.send('数据库账号密码错误，请重新登入');
@@ -88,7 +88,6 @@ app.post('/mine/deleteNote', function(req, res) {
     let user_id = req.body.user_id;
     let pwd = req.body.pwd;
     let note_id = req.body.note_id;
-    //Services.NoteOperation.getAll(user_Id, pwd, limitation).then(function(result) {
     Services.delete(user_id, pwd, note_id).then(function(result) {
         if(result == -1) {
             res.type('text/plain');

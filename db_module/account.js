@@ -11,7 +11,6 @@ const AccountSchema = new Schema({
         createdAt : Date,
         updateAt : Date
     },
-    // deleted : {type:Boolean, default:false, index:true}
 });
 
 module.exports = mongoose.model('Account', AccountSchema);

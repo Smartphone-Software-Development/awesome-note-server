@@ -17,29 +17,3 @@ const NoteSchema = new Schema({
 });
 
 module.exports=mongoose.model('Note', NoteSchema);
-
-// //单个note
-
-// {
-//     "id" : 123,                         //数字类型不用用双引号括起来
-//     "title" : "hey",
-//     "content" : "hello world"
-// }
-
-
-
-// //多个note
-// {
-// "note" : [
-//     {
-//         "id" : 123,
-//         "title" : "hey",
-//         "content" : "hello world"
-//     },
-//     {
-//         "id" : 123,
-//         "title" : "hey",
-//         "content" : "hello world"
-//     }
-// ]
-// }
