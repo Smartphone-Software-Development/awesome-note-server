@@ -6,14 +6,14 @@ const NoteSchema = new Schema({
     id : Number,
     title : String,
     content : String,
-    user_Id : {type:String, ref:'Account'},
+    user_id : {type:String, ref:'Account'},
+
+    deleted : {type:Boolean, default:false, index:true},
 
     timestamps:{
         createdAt : Date,
         updateAt : Date
-    },
-
-    deleted : {type:Boolean, default:false, index:true}
+    }
 });
 
 module.exports=mongoose.model('Note', NoteSchema);
