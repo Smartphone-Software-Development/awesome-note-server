@@ -6,6 +6,8 @@ const NoteSchema = new Schema({
     id : Number,
     title : String,
     content : String,
+    latitude : Number,
+    longitude : Number,
     user_id : {type:String, ref:'Account'},
 
     deleted : {type:Boolean, default:false, index:true},
